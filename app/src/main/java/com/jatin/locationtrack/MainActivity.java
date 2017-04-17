@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                     else {
                         ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
                     }
+                    hideSoftKeyboard();
                 }else{
                     btnLocationSharing.setText("Start location sharing");
                     android.os.Process.killProcess(android.os.Process.myPid());
@@ -134,6 +136,13 @@ public class MainActivity extends AppCompatActivity {
             }
             // other 'case' lines to check for other
             // permissions this app might request
+        }
+    }
+
+    public void hideSoftKeyboard() {
+        if(getCurrentFocus()!=null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
 }
